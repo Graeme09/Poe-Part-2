@@ -16,7 +16,11 @@ namespace Poe_Part_2
 
     public class MenuClass
     {
+
+        public SortedList<int, String> Recipe;
         public int option;
+        int ingredientNum;
+
         public void Menu() {
 
 
@@ -28,28 +32,48 @@ namespace Poe_Part_2
 
                 switch (option)
                 {
-                    case 0:
 
-                    break;
+                    //Enter a new Recipe
                     case 1:
 
-                    break;
 
+
+
+
+                        Console.WriteLine("Enter the number of Ingredients");
+                        try { ingredientNum = Convert.ToInt32(Console.ReadLine()); }
+                        catch { ingredientNum = 0; }
+                        while (ingredientNum <= 0)
+                        {
+                            Console.WriteLine("Enter the number of Ingredients");
+                            try { ingredientNum = Convert.ToInt32(Console.ReadLine()); }
+                            catch { ingredientNum = 0; }
+                        }
+
+
+                        break;
+                    
+                    //Search For Recipe
                     case 2:
 
                     break;
 
+                    //Scale Recipe
                     case 3:
 
                     break;
 
+                    //UnScale A Recipe
                     case 4:
 
                     break;
-
+                    
+                    //Print Recipes
                     case 5:
 
                     break;
+                    
+                    //Exit Application
                     case 6:
 
                     break;
@@ -83,9 +107,53 @@ namespace Poe_Part_2
             Steps.Add(stepNumber, stepDescription);
         }
 
-        public void AddIngredient(Ingredient ingredient)
+        public void AddIngredient()
         {
-            Ingredients.Add(ingredient);
+            double amount = 0;
+            int calorieCount = 0;
+
+            Console.WriteLine("Name: ");
+            string name = Console.ReadLine();
+
+            while (name.Equals("") == true)
+            {
+                Console.WriteLine("Enter the name of your ingredient again please: ");
+                name = Console.ReadLine();
+            }
+
+            Console.WriteLine("Measurement Type: ");
+            string measurementType = Console.ReadLine();
+
+            while (measurementType.Equals("") == true)
+            {
+                Console.WriteLine("Enter the type of ingredient again please: ");
+                measurementType = Console.ReadLine();
+            }
+
+            while (amount == 0)
+            {
+                try { Console.WriteLine("Amount: ");
+                    amount = double.Parse(Console.ReadLine());
+                }
+                catch { amount = 0; }
+            }
+
+            while (calorieCount == 0)
+            {
+                try
+                {
+                    Console.WriteLine("Calorie Count: ");
+                    calorieCount = int.Parse(Console.ReadLine());
+                }
+                catch {
+                    calorieCount = 0;
+                }
+            }
+
+            Ingredient newIngredient = new Ingredient(name, measurementType, amount, calorieCount);
+            Ingredients.Add(newIngredient);
+
+            Console.WriteLine("New ingredient added");
         }
 
 
@@ -112,14 +180,17 @@ namespace Poe_Part_2
         public string IngredType { get; set; }
         public double IngredSize { get; set; }
         public int CalorieCount { get; set; }
-
         public Ingredient(string name, string measurementType, double amount, int calorieCount)
         {
             IngredName = name;
             IngredType = measurementType;
             IngredSize = amount;
             CalorieCount = calorieCount;
+    
         }
+
+
+
 
     }
 
